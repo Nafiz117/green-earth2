@@ -287,6 +287,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // mobile menu toggle for responsive navbar
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (mobileToggle && mobileMenu) {
+    mobileToggle.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  }
+
   // initial loads
   loadCards();
   loadCategory();
