@@ -1,279 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Earth</title>
+    <link rel="shortcut icon" href="./assets/about.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="bg-[#F0FDF4]">
 
-document.addEventListener('DOMContentLoaded', () => {
-  const cardContainer = document.getElementById('card-container');
-  const categoryContainer = document.getElementById('category-container');
-  const cartList = document.getElementById('cart-list');
+    <!-- navbar -->
 
-  // cart state
-  const cart = {};
-
-  // Delegated cart add
-  cardContainer.addEventListener('click', function(e) {
-    if (e.target.classList.contains('cart-btn')) {
-      const cardBody = e.target.closest('.card-body');
-      if (!cardBody) return;
-      const treeNameElement = cardBody.querySelector('.card-title');
-      const treePriceElement = cardBody.querySelector('.tree-price');
-      if (!treeNameElement || !treePriceElement) return;
-      const treeName = treeNameElement.innerText.trim();
-      const treePrice = parseFloat(treePriceElement.innerText.replace(/[^\d.]/g, '')) || 0;
-      if (!cart[treeName]) cart[treeName] = { price: treePrice, quantity: 1 };
-      else cart[treeName].quantity += 1;
-      updateCartDisplay();
-    }
-  });
-
-  function updateCartDisplay() {
-    let total = 0;
-    let cartHtml = "";
-    for (const name in cart) {
-      if (!Object.prototype.hasOwnProperty.call(cart, name)) continue;
-      const item = cart[name];
-      const itemSubtotal = item.price * item.quantity;
-      total += itemSubtotal;
-      cartHtml += `
-        <div class="cart-item flex justify-between items-center bg-[#F0FDF4] p-4 mb-2 rounded-lg" data-name="${name}">
-          <div>
-            <span class="text-lg font-semibold">${name}</span>
-            <p><i class="fa-solid fa-bangladeshi-taka-sign"></i>${item.price.toFixed(2)} &times; ${item.quantity}</p>
-          </div>
-          <div>
-            <button class="cross-btn text-red-600 p-2" aria-label="remove ${name}"><i class="fa-solid fa-xmark"></i></button>
-          </div>
+    <div class="bg-[#15803D] py-5 flex justify-between items-center px-20">
+        <div>
+            <h1 class="text-white font-semibold ">Green Earth</h1>
         </div>
-      `;
-    }
-
-    if (total > 0) {
-      cartHtml += `
-        <div class="flex justify-between text-2xl font-thin p-4">
-          <p><strong>Total:</strong></p>
-          <p class="font-thin"><strong><i class="fa-solid fa-bangladeshi-taka-sign"></i>${total.toFixed(2)}</strong></p>
+        <div class="flex gap-3">
+            <a class="text-white font-semibold text-sm" href="">About</a>
+            <a class="text-white font-semibold text-sm" href="">Gallery</a>
+            <a class="text-white font-semibold text-sm" href="">Plant a Tree</a>
         </div>
-      `;
-    } else {
-      cartHtml = `<li>Cart is empty.</li>`;
-    }
+        <button class="bg-yellow-300 text-green-700 text-sm p-2 rounded-3xl">Plant a Tree</button>
 
-    cartList.innerHTML = cartHtml;
-  }
 
-  // Delegated remove button on cartList
-  cartList.addEventListener('click', (e) => {
-    const btn = e.target.closest('.cross-btn');
-    if (!btn) return;
-    const itemEl = btn.closest('.cart-item');
-    if (!itemEl) return;
-    const name = itemEl.dataset.name;
-    if (name && cart[name]) {
-      delete cart[name];
-      updateCartDisplay();
-    }
-  });
+    </div>
 
-  // Load categories
-  const loadCategory = () => {
+
+    <!-- hero section -->
+
+    <section class="flex bg-[#CFF0DC]">
+        <div class="">
+            <img src="./assets/hero-leaf1.png" alt="">
+
+        </div>
+        <div class="flex flex-col justify-center items-center gap-5 px-0 md:px-10">
+            <h1 class="font-bold text-2xl">Plant a Tree, Grow a Future</h1>
+            <p class="text-gray-700 text-center">Join our mission to plant 1 million trees and make the Earth greener for future
+             generations.</p>
+             <button class="bg-yellow-300 text-green-700 text-sm p-2 rounded-3xl">Get Involved</button>
+
+
+
+        </div>
+        <div class="hidden md:block">
+            <img src="./assets/hero-leaf2.png" alt="">
+
+        </div>
+    </section>
+
+    <!-- main section -->
+
+
+     <section id="spinner" class="flex justify-center items-center py-10  hidden">
+      <span class="loading loading-spinner loading-xl"></span>
+     </section>
+
+
     
-    fetch("https://openapi.programming-hero.com/api/categories")
-      .then((res) => res.json())
-      .then((data) => {
-        const categories = data.categories || [];
-        showCategory(categories);
-      })
-      .catch(err => {
-        console.error('Failed to load categories:', err);
-      });
-  };
 
-  // Render categories
-  const showCategory = (categories) => {
-   
-    categoryContainer.innerHTML = '';
-    const allSpan = document.createElement('span');
+
+    <section  class="">
     
-    allSpan.className = 'category-btn hover:bg-green-400 hover:text-white p-1 cursor-pointer rounded inline-block';
-    allSpan.dataset.id = 'all';
-    allSpan.textContent = 'All Trees';
-    allSpan.classList.add('bg-green-700','text-white');
-    categoryContainer.appendChild(allSpan);
+        <h1 class="text-3xl font-semibold mx-auto text-center py-3 mt-10 mb-5">Choose Your Trees</h1>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 px-4 md:px-0">
 
-    categories.forEach(category => {
-      const span = document.createElement('span');
-      span.className = 'category-btn hover:bg-green-700 hover:text-white p-1 cursor-pointer rounded inline-block';
-      span.dataset.id = category.id ?? category.category_id ?? category._id ?? category.id;
-      span.textContent = category.category_name ?? category.name ?? 'Unknown';
-      categoryContainer.appendChild(span);
-    });
-  };
+            <!-- categories of tree -->
 
-  // Delegated category clicks: toggle active and load relevant cards
-  categoryContainer.addEventListener('click', (e) => {
-    const btn = e.target.closest('.category-btn');
-    if (!btn) return;
-    // remove active only from category buttons inside the container
-    categoryContainer.querySelectorAll('.category-btn').forEach(s => s.classList.remove('bg-green-700','text-white'));
-    btn.classList.add('bg-green-700','text-white');
-
-    const categoryId = btn.dataset.id;
-    if (!categoryId || categoryId === 'all') {
-      loadCards();
-    } else {
-      loadPlantsByCategory(categoryId);
-    }
-  });
-
-  // Show plants/cards for a category (tree name is clickable and opens modal)
-  const showPlantsByCategory = (plants) => {
-    const container = document.querySelector('#card-container');
-    if (!container) {
-      console.error('The card container element was not found.');
-      return;
-    }
-    container.innerHTML = "";
-    plants.forEach(plant => {
-      container.innerHTML += `
-        <div class="card shadow-sm bg-white card-body space-y-2 p-2">
-          <figure><img class="w-full h-48 object-cover" src="${plant.image}" alt="${plant.name}" /></figure>
-          <div class="card-body">
-            <h2 class="card-title open-modal cursor-pointer" data-title="${plant.name}" data-image="${plant.image}" data-desc="${(plant.description||'')}" data-price="${plant.price ?? 0}">${plant.name}</h2>
-            <p class="p-1">${plant.description || ''}</p>
-            <div class="flex justify-between items-center">
-              <button class="btn btn-outline text-green-800 border-none rounded-4xl bg-[#F0FDF4]">${plant.category || ''}</button>
-              <span class="font-bold text-lg tree-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${plant.price ?? 0}</span>
+        <div id="category-container" class="ml-0 md:ml-5 md:col-span-1 col-span-1">
+            <div class="flex flex-col px-3 md:px-0">
+              <h2 class="text-xl font-semibold mb-2">Categories</h2>
+              <!-- category-list will be rendered into JS; small screens: centered horizontal pills, md+: left-aligned column -->
+              <div class="category-list flex md:flex-col gap-2 mt-1 overflow-x-auto md:overflow-visible whitespace-nowrap items-center md:items-start">
+                <span class="category-btn inline-block px-3 py-1 rounded cursor-pointer mr-2 md:mr-0 text-green-700 font-semibold">All Trees</span>
+              </div>
             </div>
-            <button class="btn bg-green-700 rounded-3xl text-white cart-btn">Add to Cart</button>
-          </div>
+            
         </div>
-      `;
-    });
-  };
+        
+        <div id="card-container" class="grid grid-cols-1 md:grid-cols-3 gap-5 md:col-span-3 col-span-1">
+            
+        
 
-  // Fetch plants by categoryId (fixed variable usage)
-  const loadPlantsByCategory = (categoryId) => {
-    
-    // ensure categoryId is provided
-    if (!categoryId) return;
-    fetch(`https://openapi.programming-hero.com/api/category/${categoryId}`)
-      .then(res => res.json())
-      .then(data => {
-        const plants = data.plants || data.data || [];
-        showPlantsByCategory(plants);
-      })
-      .catch(err => console.error('Error fetching plants:', err));
-  };
-   
+        <!-- card section -->
+
+        
+            
+             
+        </div>
+        
+
+        <!-- modal -->
+         
+
+
+    <!-- if there is a button in form, it will close the modal -->
+        
+
+        <!-- Open the modal using ID.showModal() method -->
+
+
+        <!-- cart section -->
+
+        <aside class="col-span-1 md:col-span-1 bg-white p-4 rounded-lg mt-4 md:mt-0">
+            <h1 class="text-2xl font-semibold mb-3">Your Cart</h1>
+            <ul id="cart-list">
+
+            </ul>
+
+
+          
+        </aside> 
+
+        </div>
+        
+
+    </section>
+
+
+
+    <!-- 4th section -->
+
+
+    <section class=" w-3/5 mx-auto mt-10 py-8">
+        <h1 class="text-2xl font-semibold text-center mb-5">About the Campaign</h1>
+        <div class="flex flex-col gap-6 md:flex-row justify-center items-center">
+        
+        <div class="">
+            
+            <img class="" src="./assets/about.png" alt="">
+
+        </div>
+        <div class="">
+            <p class="p-4">
+                Green Earth is a global tree plantation initiative dedicated to fighting climate change. Since our start, we’ve planted over 500,000 trees worldwide. By joining our campaign, you help restore forests, create habitats for wildlife, and combat global warming.
+                </p>
+
+                <div>
+                <ul class="list-disc pl-10">
+                    <li>Restoration of natural habitats</li>
+                    <li>Improvement of air quality</li>
+                    <li>Support for local communities</li>
+                       
+                       
+                </ul>
+                </div>
+            
+
+
+        </div>
+        </div>
+    </section>
+
+
+
+    <!-- 5th -->
+
+    <section class="bg-[#cff0dc] py-10">
+        <h1 class="text-2xl font-semibold text-center py-3">Our Impact</h1>
+
+        <div class="grid grid-cols-3 justify-center items-center gap-8 px-4 py-8 w-10/12 mx-auto">
+            <div class="bg-white rounded-lg flex flex-col justify-center items-center p-5">
+                <span class="text-green-800 text-2xl font-bold">500K+</span>
+                <p class="text-sm text-gray-800">Trees Planted</p>
+
+            </div>
+            <div class="bg-white rounded-lg flex flex-col justify-center items-center p-5">
+                <span class="text-green-800 text-2xl font-bold">120K+</span>
+                <p class="text-sm text-gray-800">Communities Involved</p>
+
+            </div>
+            <div class="bg-white rounded-lg flex flex-col justify-center items-center p-5">
+                <span class="text-green-800 text-2xl font-bold">30K+</span>
+                <p class="text-sm text-gray-800">Communities Involved</p>
+
+            </div>
+            
+        </div>
+
+    </section>
+
+
+    <!-- 6th -->
+
+    <section class="bg-[#166534] flex flex-col justify-center items-center p-8">
+        <h1 class="text-white text-2xl font-semibold">Plant a Tree Today</h1>
+        <fieldset class="fieldset border-none rounded-box w-xs border p-6 bg-green-700 mb-7">
+  <legend class="fieldset-legend"></legend>
+
+  
+  <input type="text" class="input" placeholder="Your Name" />
+
+  
+  <input type="text" class="input" placeholder="Your Email Address" />
+
+  <select class="select text-gray-500">
+   <option class="hover:bg-blue-300" >Number of Trees</option>
+   <option>1 Tree - $5</option>
+  <option>5 Trees - $25 </option>
+  <option>10 Trees - $50</option>
+  </select>
+
+
   
 
-// spinner function
+     <button class="bg-yellow-300 text-green-700 text-sm p-2 rounded-3xl mt-2">Donate Now</button>
 
-    const manageSpinner = (status) => {
-        if(status === true){
-            document.getElementById("spinner").classList.remove("hidden");
-            document.getElementById("card-container").classList.add("hidden");
-
-        } else {
-            document.getElementById("spinner").classList.add("hidden");
-            document.getElementById("card-container").classList.remove("hidden");
-        }
-    }
+</fieldset>
+    </section>
 
 
+    <!-- 7th -->
 
-  // Load all plant cards
-  const loadCards = () => {
-    manageSpinner(true)
-    fetch("https://openapi.programming-hero.com/api/plants")
-      .then((res) => res.json())
-      .then((data) => {
-        const cards = data.plants || data.data || [];
-        showCard(cards);
-      })
-      .catch(err => console.error('Failed to load cards:', err));
-  };
+    <footer class="bg-green-900 p-4 flex justify-center items-center">
+        <p class="text-white text-sm">© 2025 Green Earth. All Rights Reserved.</p>
+    </footer>
 
-  const showCard = (cards) => {
-    
-    const cardContainerLocal = document.getElementById('card-container');
-    cardContainerLocal.innerHTML = "";
-    cards.forEach(card => {
-      cardContainerLocal.innerHTML += `
-        <div class="card shadow-sm bg-white card-body space-y-2 p-2">
-          <figure><img class="w-full h-48 object-cover" src="${card.image}" alt="${card.name}" /></figure>
-          <div class="card-body">
-            <h2 class="card-title open-modal cursor-pointer" data-title="${card.name}" data-image="${card.image}" data-desc="${(card.description||'')}" data-price="${card.price ?? 0}">${card.name}</h2>
-            <p class="p-1">${card.description || ''}</p>
-            <div class="flex justify-between items-center">
-              <button class="btn btn-outline text-green-800 border-none rounded-4xl bg-[#F0FDF4]">${card.category || ''}</button>
-              <span class="font-bold text-lg tree-price"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${card.price ?? 0}</span>
-            </div>
-            <button class="btn bg-green-700 rounded-3xl text-white cart-btn">Add to Cart</button>
-          </div>
-        </div>
-      `;
-    });
-    manageSpinner(false)
-  };
-
-  // Modal elements (now inside DOMContentLoaded)
-  const modal = document.getElementById('detail-modal');
-  const modalTitle = document.getElementById('modal-title');
-  const modalImage = document.getElementById('modal-image');
-  const modalDesc = document.getElementById('modal-desc');
-  const modalCloseBtn = document.getElementById('modal-close');
-
-  // Delegated modal open
-  document.body.addEventListener('click', (e) => {
-    const btn = e.target.closest('.open-modal');
-    if (!btn) return;
-    const title = btn.dataset.title || '';
-    const img = btn.dataset.image || '';
-    const desc = btn.dataset.desc || '';
-    const priceVal = btn.dataset.price ?? '';
-
-    if (modalTitle) modalTitle.textContent = title;
-    if (modalImage) modalImage.src = img;
-
-    if (modalDesc) {
-      // render description and price on separate lines; escape user data
-      const descHtml = desc ? `<div>${escapeHtml(desc)}</div>` : '';
-      const priceHtml = priceVal ? `<div class="mt-2 text-lg font-semibold"><i class="fa-solid fa-bangladeshi-taka-sign"></i>${escapeHtml(priceVal)}</div>` : '';
-      modalDesc.innerHTML = descHtml + priceHtml;
-    }
-
-    // ensure dialog is visually centered (works whether showModal supported or not)
-    if (modal) {
-      modal.style.position = 'fixed';
-      modal.style.left = '50%';
-      modal.style.top = '50%';
-      modal.style.transform = 'translate(-50%, -50%)';
-      try {
-        if (typeof modal.showModal === 'function') modal.showModal();
-        else modal.classList.remove('hidden');
-      } catch (err) {
-        modal.classList.remove('hidden');
-      }
-    }
-  });
-
-  // simple HTML escaper to avoid injection when using innerHTML
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
-  // close handlers
-  if (modalCloseBtn) modalCloseBtn.addEventListener('click', () => modal?.close?.());
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.close?.();
-    });
-  }
-
-  // initial loads
-  loadCards();
-  loadCategory();
-});
+    <dialog id="detail-modal" class="rounded-lg p-4">
+    <form method="dialog" class="space-y-4">
+      <h3 id="modal-title" class="text-xl font-semibold">Title</h3>
+      <img id="modal-image" src="" alt="" class="w-full h-48 object-cover"/>
+      <p id="modal-desc" class="text-sm text-gray-700"></p>
+      <div class="flex justify-end gap-2">
+        <button id="modal-close" type="button" class="btn btn-outline">Close</button>
+      </div>
+    </form>
+  </dialog>
+  
+  <script src="./script/index.js"></script>
+</body>
+</html>
