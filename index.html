@@ -13,19 +13,36 @@
 
     <!-- navbar -->
 
-    <div class="bg-[#15803D] py-5 flex justify-between items-center px-20">
-        <div>
-            <h1 class="text-white font-semibold ">Green Earth</h1>
-        </div>
-        <div class="flex gap-3">
+    <header class="bg-[#15803D]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <h1 class="text-white font-semibold text-lg">Green Earth</h1>
+          </div>
+          <!-- desktop menu -->
+          <nav class="hidden md:flex items-center gap-4">
             <a class="text-white font-semibold text-sm" href="">About</a>
             <a class="text-white font-semibold text-sm" href="">Gallery</a>
             <a class="text-white font-semibold text-sm" href="">Plant a Tree</a>
+            <button class="ml-4 bg-yellow-300 text-green-700 text-sm p-2 rounded-3xl">Plant a Tree</button>
+          </nav>
+
+          <!-- mobile toggle -->
+          <div class="md:hidden flex items-center">
+            <button id="mobile-toggle" class="text-white p-2" aria-label="Open menu">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+          </div>
         </div>
-        <button class="bg-yellow-300 text-green-700 text-sm p-2 rounded-3xl">Plant a Tree</button>
-
-
-    </div>
+      </div>
+      <!-- mobile menu -->
+      <nav id="mobile-menu" class="md:hidden hidden px-4 pb-4">
+        <a class="block text-white font-semibold py-2" href="">About</a>
+        <a class="block text-white font-semibold py-2" href="">Gallery</a>
+        <a class="block text-white font-semibold py-2" href="">Plant a Tree</a>
+        <button class="w-full mt-2 bg-yellow-300 text-green-700 text-sm p-2 rounded-3xl">Plant a Tree</button>
+      </nav>
+    </header>
 
 
     <!-- hero section -->
